@@ -1,22 +1,350 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>diovani.com.br</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diovani.com.br</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
+            font-size: 11px;
+            background-color: #008080;
+            color: #000000;
+            line-height: 1.4;
             padding: 20px;
-            text-align: center;
+            min-height: 100vh;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><rect fill="%23000000" width="50" height="50"/><rect fill="%23000000" x="50" y="50" width="50" height="50"/></svg>');
         }
-        h1 {
-            color: #2c3e50;
+        
+        .desktop {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .window {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .title-bar-controls {
+            display: flex;
+        }
+        
+        .title-bar-button {
+            width: 16px;
+            height: 14px;
+            background-color: #c0c0c0;
+            border: 1px solid #c0c0c0;
+            margin-left: 2px;
+            font-size: 8px;
+            text-align: center;
+            line-height: 12px;
+            cursor: pointer;
+        }
+        
+        .window-content {
+            padding: 10px;
+            min-height: 200px;
+        }
+        
+        .hero {
+            height: 400px;
+            background-color: #000080;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px outset #c0c0c0;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 0px #000;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 15px;
+            min-height: 150px;
+        }
+        
+        .card h3 {
+            margin-bottom: 10px;
+            color: #000080;
+        }
+        
+        .button {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-family: "MS Sans Serif";
+            font-size: 11px;
+            margin: 5px;
+        }
+        
+        .button:active {
+            border: 2px inset #c0c0c0;
+        }
+        
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #c0c0c0;
+            border-top: 2px outset #c0c0c0;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .start-button {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 3px 15px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .start-button:active {
+            border: 2px inset #c0c0c0;
+        }
+        
+        .clock {
+            margin-left: auto;
+            padding: 3px 10px;
+            background-color: #c0c0c0;
+            border: 2px inset #c0c0c0;
+        }
+        
+        hr {
+            border: 1px inset #c0c0c0;
+            margin: 10px 0;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 15px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        a {
+            color: #000080;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 70px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .icon img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                height: 200px;
+            }
+            
+            .hero h1 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>diovani.com.br h1</h1>
-    <p>diovani.com.br p</p>
+    <div class="desktop">
+        <div class="hero">
+            <h1>DIOVANI.COM.BR</h1>
+        </div>
+        
+        <div class="icons">
+            <div class="icon">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTE2IDhMMjQgMTZMMTYgMjRMOCAxNkwxNiA4WiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="Projects">
+                <span>Projects</span>
+            </div>
+            <div class="icon">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmYwMDAwIi8+PHBhdGggZD0iTTggOEgyNFYyNEg4VjhaTTEwIDEwVjIySDIyVjEwSDEwWiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="Blog">
+                <span>Blog</span>
+            </div>
+            <div class="icon">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmZjAwIi8+PHBhdGggZD0iTTggOEgyNFYyNEg4VjhaTTEwIDEwVjIySDIyVjEwSDEwWiIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg==" alt="Contact">
+                <span>Contact</span>
+            </div>
+            <div class="icon">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMDA4MDgwIi8+PHBhdGggZD0iTTE2IDE2TDEwIDEwTDE2IDE2TDIyIDEwTDE2IDE2WiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="About">
+                <span>About</span>
+            </div>
+        </div>
+        
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">Welcome to Diovani.com.br</div>
+                <div class="title-bar-controls">
+                    <button class="title-bar-button">−</button>
+                    <button class="title-bar-button">□</button>
+                    <button class="title-bar-button">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <p>Hello! Welcome to my personal website with a classic Windows 95 aesthetic.</p>
+                <br>
+                <p>This site is hosted on GitHub Pages.</p>
+                <br>
+                <button class="button">Click Me</button>
+                <button class="button">Another Button</button>
+            </div>
+        </div>
+        
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">Projects & Portfolio</div>
+                <div class="title-bar-controls">
+                    <button class="title-bar-button">−</button>
+                    <button class="title-bar-button">□</button>
+                    <button class="title-bar-button">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="content-grid">
+                    <div class="card">
+                        <h3>Web Development</h3>
+                        <p>Creating modern websites with retro aesthetics.</p>
+                        <br>
+                        <button class="button">View</button>
+                    </div>
+                    <div class="card">
+                        <h3>GitHub Projects</h3>
+                        <p>Open source contributions and personal projects.</p>
+                        <br>
+                        <button class="button">View</button>
+                    </div>
+                    <div class="card">
+                        <h3>Design Work</h3>
+                        <p>UI/UX design with a focus on usability.</p>
+                        <br>
+                        <button class="button">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">System Information</div>
+                <div class="title-bar-controls">
+                    <button class="title-bar-button">−</button>
+                    <button class="title-bar-button">□</button>
+                    <button class="title-bar-button">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <p><strong>User:</strong> Diovani</p>
+                <p><strong>System:</strong> Windows 95</p>
+                <p><strong>Version:</strong> 4.00.950</p>
+                <p><strong>Registered to:</strong> Diovani</p>
+                <hr>
+                <p><strong>Computer:</strong></p>
+                <ul>
+                    <li>Intel Pentium Processor</li>
+                    <li>32 MB RAM</li>
+                    <li>2.1 GB Hard Disk</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="taskbar">
+        <button class="start-button">Start</button>
+        <div class="clock" id="clock">10:41 AM</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('clock').textContent = timeString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+        
+        document.querySelectorAll('.title-bar-button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.style.border = '2px inset #c0c0c0';
+            });
+            button.addEventListener('mouseup', function() {
+                this.style.border = '2px outset #c0c0c0';
+            });
+        });
+        
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.style.border = '2px inset #c0c0c0';
+            });
+            button.addEventListener('mouseup', function() {
+                this.style.border = '2px outset #c0c0c0';
+            });
+        });
+        
+        document.querySelector('.start-button').addEventListener('mousedown', function() {
+            this.style.border = '2px inset #c0c0c0';
+        });
+        document.querySelector('.start-button').addEventListener('mouseup', function() {
+            this.style.border = '2px outset #c0c0c0';
+        });
+    </script>
 </body>
 </html>
