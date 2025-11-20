@@ -5,40 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diovani.com.br</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "MS Sans Serif", Tahoma, sans-serif;
+            font-size: 11px;
+        }
         
         body {
-            font-family: "MS Sans Serif", "Microsoft Sans Serif", Arial, sans-serif;
-            font-size: 11px;
-            background-color: #008080;
-            color: #000000;
-            line-height: 1.4;
-            padding: 20px;
-            min-height: 100vh;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.1"><rect fill="%23000000" width="50" height="50"/><rect fill="%23000000" x="50" y="50" width="50" height="50"/></svg>');
+            background: #008080 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect fill="%23008080" width="4" height="4"/><rect fill="%2300a0a0" x="2" y="0" width="2" height="2"/><rect fill="%2300a0a0" x="0" y="2" width="2" height="2"/></svg>');
+            color: #000;
+            overflow: hidden;
+            height: 100vh;
+            image-rendering: pixelated;
         }
         
         .desktop {
-            max-width: 1000px;
-            margin: 0 auto;
             position: relative;
+            width: 100%;
+            height: calc(100vh - 28px);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .desktop-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 70px;
+            margin: 10px;
+            padding: 2px;
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .desktop-icon.selected {
+            background: rgba(0, 0, 128, 0.5);
+        }
+        
+        .desktop-icon img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 4px;
+            image-rendering: pixelated;
         }
         
         .window {
-            background-color: #c0c0c0;
+            position: absolute;
+            background: #c0c0c0;
             border: 2px outset #c0c0c0;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            min-width: 200px;
+            min-height: 150px;
         }
         
         .title-bar {
             background: linear-gradient(90deg, #000080, #1084d0);
-            color: white;
-            padding: 3px 5px;
-            font-weight: bold;
+            color: #fff;
+            padding: 2px 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 18px;
+            font-weight: bold;
         }
         
         .title-bar-controls {
@@ -48,68 +82,48 @@
         .title-bar-button {
             width: 16px;
             height: 14px;
-            background-color: #c0c0c0;
-            border: 1px solid #c0c0c0;
-            margin-left: 2px;
+            background: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            margin-left: 1px;
             font-size: 8px;
-            text-align: center;
             line-height: 12px;
+            text-align: center;
             cursor: pointer;
+        }
+        
+        .title-bar-button:active {
+            border: 1px inset #c0c0c0;
         }
         
         .window-content {
-            padding: 10px;
-            min-height: 200px;
+            padding: 8px;
+            height: calc(100% - 18px);
+            overflow: auto;
         }
         
-        .hero {
-            height: 400px;
-            background-color: #000080;
-            color: white;
+        .menu-bar {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 20px;
-            border: 2px outset #c0c0c0;
+            background: #c0c0c0;
+            border-bottom: 1px solid #808080;
+            padding: 2px 0;
         }
         
-        .hero h1 {
-            font-size: 36px;
-            text-shadow: 2px 2px 0px #000;
-        }
-        
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .card {
-            background-color: #c0c0c0;
-            border: 2px outset #c0c0c0;
-            padding: 15px;
-            min-height: 150px;
-        }
-        
-        .card h3 {
-            margin-bottom: 10px;
-            color: #000080;
-        }
-        
-        .button {
-            background-color: #c0c0c0;
-            border: 2px outset #c0c0c0;
-            padding: 5px 15px;
+        .menu-item {
+            padding: 3px 10px;
             cursor: pointer;
-            font-family: "MS Sans Serif";
-            font-size: 11px;
-            margin: 5px;
         }
         
-        .button:active {
-            border: 2px inset #c0c0c0;
+        .menu-item:hover {
+            background: #000080;
+            color: #fff;
+        }
+        
+        .status-bar {
+            background: #c0c0c0;
+            border-top: 1px solid #808080;
+            padding: 2px 4px;
+            display: flex;
+            justify-content: space-between;
         }
         
         .taskbar {
@@ -117,234 +131,669 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background-color: #c0c0c0;
+            background: #c0c0c0;
             border-top: 2px outset #c0c0c0;
-            padding: 3px;
+            height: 28px;
             display: flex;
             align-items: center;
+            padding: 2px;
             z-index: 1000;
         }
         
         .start-button {
-            background-color: #c0c0c0;
+            background: #c0c0c0;
             border: 2px outset #c0c0c0;
-            padding: 3px 15px;
+            padding: 2px 6px;
             font-weight: bold;
-            margin-right: 5px;
+            margin-right: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
         }
         
         .start-button:active {
             border: 2px inset #c0c0c0;
         }
         
-        .clock {
+        .start-button img {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+        }
+        
+        .taskbar-items {
+            display: flex;
+            flex-grow: 1;
+        }
+        
+        .taskbar-item {
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 2px 8px;
+            margin-right: 2px;
+            cursor: pointer;
+            max-width: 160px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .taskbar-item.active {
+            border: 2px inset #c0c0c0;
+        }
+        
+        .system-tray {
+            display: flex;
+            align-items: center;
             margin-left: auto;
-            padding: 3px 10px;
-            background-color: #c0c0c0;
+        }
+        
+        .clock {
+            background: #c0c0c0;
+            border: 2px inset #c0c0c0;
+            padding: 2px 6px;
+            font-size: 11px;
+        }
+        
+        .button {
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 3px 12px;
+            cursor: pointer;
+            font-size: 11px;
+        }
+        
+        .button:active {
             border: 2px inset #c0c0c0;
         }
         
         hr {
-            border: 1px inset #c0c0c0;
-            margin: 10px 0;
+            border: none;
+            border-top: 1px solid #808080;
+            margin: 4px 0;
         }
         
-        ul {
-            list-style-type: none;
-            padding-left: 15px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
-        
-        a {
-            color: #000080;
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        .icons {
+        .icon-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
         }
         
-        .icon {
+        .folder-view {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 70px;
-            text-align: center;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+        
+        .start-menu {
+            position: fixed;
+            bottom: 28px;
+            left: 0;
+            width: 200px;
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            z-index: 1001;
+            display: none;
+        }
+        
+        .start-menu-header {
+            background: #000080;
+            color: #fff;
+            padding: 4px 8px;
+            font-weight: bold;
+        }
+        
+        .start-menu-items {
+            padding: 4px 0;
+        }
+        
+        .start-menu-item {
+            padding: 4px 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
         
-        .icon img {
-            width: 32px;
-            height: 32px;
-            margin-bottom: 5px;
+        .start-menu-item:hover {
+            background: #000080;
+            color: #fff;
         }
         
-        @media (max-width: 600px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero {
-                height: 200px;
-            }
-            
-            .hero h1 {
-                font-size: 24px;
-            }
+        .start-menu-item img {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
+        
+        .start-menu-separator {
+            height: 2px;
+            background: #808080;
+            margin: 2px 8px;
+        }
+        
+        .context-menu {
+            position: absolute;
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            z-index: 1002;
+            display: none;
+        }
+        
+        .context-menu-item {
+            padding: 4px 20px;
+            cursor: pointer;
+            min-width: 120px;
+        }
+        
+        .context-menu-item:hover {
+            background: #000080;
+            color: #fff;
+        }
+        
+        .context-menu-separator {
+            height: 2px;
+            background: #808080;
+            margin: 2px 0;
         }
     </style>
 </head>
 <body>
     <div class="desktop">
-        <div class="hero">
-            <h1>DIOVANI.COM.BR</h1>
+        <div class="desktop-icon" data-window="my-computer">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjI4IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxyZWN0IHg9IjQiIHk9IjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iNCIgeT0iMTAiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyIiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iNCIgeT0iMTQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyIiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iNCIgeT0iMTgiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyIiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iNCIgeT0iMjIiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyIiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iMTIiIHk9IjgiIHdpZHRoPSI4IiBoZWlnaHQ9IjIiIGZpbGw9IiMwMDgwMDAiLz48L3N2Zz4=" alt="Meu Computador">
+            <span>Meu Computador</span>
         </div>
         
-        <div class="icons">
-            <div class="icon">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTE2IDhMMjQgMTZMMTYgMjRMOCAxNkwxNiA4WiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="Projects">
-                <span>Projects</span>
-            </div>
-            <div class="icon">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmYwMDAwIi8+PHBhdGggZD0iTTggOEgyNFYyNEg4VjhaTTEwIDEwVjIySDIyVjEwSDEwWiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="Blog">
-                <span>Blog</span>
-            </div>
-            <div class="icon">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjZmZmZjAwIi8+PHBhdGggZD0iTTggOEgyNFYyNEg4VjhaTTEwIDEwVjIySDIyVjEwSDEwWiIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg==" alt="Contact">
-                <span>Contact</span>
-            </div>
-            <div class="icon">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSIjMDA4MDgwIi8+PHBhdGggZD0iTTE2IDE2TDEwIDEwTDE2IDE2TDIyIDEwTDE2IDE2WiIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="About">
-                <span>About</span>
-            </div>
+        <div class="desktop-icon" data-window="projects">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTQgNEgyOFYyOEg0VjRaIiBmaWxsPSIjZmZmZjAwIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik04IDhIMjRWMjRIOFY4WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMiAxMkgyMFYyMEgxMlYxMloiIGZpbGw9IiMwMDgwMDAiLz48L3N2Zz4=" alt="Projetos">
+            <span>Projetos</span>
         </div>
         
-        <div class="window">
-            <div class="title-bar">
-                <div class="title-bar-text">Welcome to Diovani.com.br</div>
-                <div class="title-bar-controls">
-                    <button class="title-bar-button">−</button>
-                    <button class="title-bar-button">□</button>
-                    <button class="title-bar-button">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <p>Hello! Welcome to my personal website with a classic Windows 95 aesthetic.</p>
-                <br>
-                <p>This site is hosted on GitHub Pages.</p>
-                <br>
-                <button class="button">Click Me</button>
-                <button class="button">Another Button</button>
-            </div>
+        <div class="desktop-icon" data-window="documents">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTYgNkgyNlYyNkg2VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik04IDhIMjRWMjJIOFY4WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMCAxMEgyMlYxNkgxMFYxMFoiIGZpbGw9IiMwMDgwMDAiLz48cGF0aCBkPSJNMTAgMThIMjJWMjBIMTBWMThaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTEwIDIySDI0VjI0SDEwVjIyWiIgZmlsbD0iIzAwODAwMCIvPjwvc3ZnPg==" alt="Documentos">
+            <span>Documentos</span>
         </div>
         
-        <div class="window">
-            <div class="title-bar">
-                <div class="title-bar-text">Projects & Portfolio</div>
-                <div class="title-bar-controls">
-                    <button class="title-bar-button">−</button>
-                    <button class="title-bar-button">□</button>
-                    <button class="title-bar-button">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <div class="content-grid">
-                    <div class="card">
-                        <h3>Web Development</h3>
-                        <p>Creating modern websites with retro aesthetics.</p>
-                        <br>
-                        <button class="button">View</button>
-                    </div>
-                    <div class="card">
-                        <h3>GitHub Projects</h3>
-                        <p>Open source contributions and personal projects.</p>
-                        <br>
-                        <button class="button">View</button>
-                    </div>
-                    <div class="card">
-                        <h3>Design Work</h3>
-                        <p>UI/UX design with a focus on usability.</p>
-                        <br>
-                        <button class="button">View</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="window">
-            <div class="title-bar">
-                <div class="title-bar-text">System Information</div>
-                <div class="title-bar-controls">
-                    <button class="title-bar-button">−</button>
-                    <button class="title-bar-button">□</button>
-                    <button class="title-bar-button">×</button>
-                </div>
-            </div>
-            <div class="window-content">
-                <p><strong>User:</strong> Diovani</p>
-                <p><strong>System:</strong> Windows 95</p>
-                <p><strong>Version:</strong> 4.00.950</p>
-                <p><strong>Registered to:</strong> Diovani</p>
-                <hr>
-                <p><strong>Computer:</strong></p>
-                <ul>
-                    <li>Intel Pentium Processor</li>
-                    <li>32 MB RAM</li>
-                    <li>2.1 GB Hard Disk</li>
-                </ul>
-            </div>
+        <div class="desktop-icon" data-window="recycle-bin">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTggNEgyNFYyOEg4VjRaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0xMiA4SDIwVjI0SDEyVjhaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTE0IDEySDE4VjE2SDE0VjEyWiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xNCAxOEgxOFYyMEgxNFYxOFoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=" alt="Lixeira">
+            <span>Lixeira</span>
         </div>
     </div>
     
     <div class="taskbar">
-        <button class="start-button">Start</button>
-        <div class="clock" id="clock">10:41 AM</div>
+        <div class="start-button" id="start-button">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cmVjdCB4PSI0IiB5PSI0IiB3aWR0aD0iOCIgaGVpZ2h0PSIyIiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iNCIgeT0iNyIgd2lkdGg9IjgiIGhlaWdodD0iMiIgZmlsbD0iIzAwODAwMCIvPjxyZWN0IHg9IjQiIHk9IjEwIiB3aWR0aD0iOCIgaGVpZ2h0PSIyIiBmaWxsPSIjMDA4MDAwIi8+PC9zdmc+" alt="Iniciar">
+            Iniciar
+        </div>
+        
+        <div class="taskbar-items" id="taskbar-items"></div>
+        
+        <div class="system-tray">
+            <div class="clock" id="clock">10:41 AM</div>
+        </div>
     </div>
+    
+    <div class="start-menu" id="start-menu">
+        <div class="start-menu-header">Diovani</div>
+        <div class="start-menu-items">
+            <div class="start-menu-item" data-window="my-computer">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHJlY3QgeD0iMSIgeT0iMSIgd2lkdGg9IjE0IiBoZWlnaHQ9IjEyIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cmVjdCB4PSIyIiB5PSIyIiB3aWR0aD0iMTIiIGhlaWdodD0iMiIgZmlsbD0iIzAwODAwMCIvPjxyZWN0IHg9IjIiIHk9IjUiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxIiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iMiIgeT0iNyIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDgwMDAiLz48cmVjdCB4PSIyIiB5PSI5IiB3aWR0aD0iMTIiIGhlaWdodD0iMSIgZmlsbD0iIzAwODAwMCIvPjxyZWN0IHg9IjIiIHk9IjExIiB3aWR0aD0iMTIiIGhlaWdodD0iMSIgZmlsbD0iIzAwODAwMCIvPjxyZWN0IHg9IjYiIHk9IjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDgwMDAiLz48L3N2Zz4=" alt="Meu Computador">
+                Meu Computador
+            </div>
+            <div class="start-menu-item" data-window="documents">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZD0iTTMgM0gxM1YxM0gzVjNaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNNCA0SDEyVjEySDRWNFoiIGZpbGw9IiNmZmZmZmYiLz48cGF0aCBkPSJNNiA2SDEwVjhINlY2WiIgZmlsbD0iIzAwODAwMCIvPjxwYXRoIGQ9Ik02IDEwSDEyVjExSDZWMTBaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTYgMTJIMTJWMTNINlYxMloiIGZpbGw9IiMwMDgwMDAiLz48L3N2Zz4=" alt="Documentos">
+                Documentos
+            </div>
+            <div class="start-menu-item" data-window="projects">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZD0iTTIgMkgxNFYxNEgyVjJaIiBmaWxsPSIjZmZmZjAwIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNNCA0SDEyVjEySDRWNFoiIGZpbGw9IiNmZmZmZmYiLz48cGF0aCBkPSJNNiA2SDEwVjEwSDZWNFoiIGZpbGw9IiMwMDgwMDAiLz48L3N2Zz4=" alt="Projetos">
+                Projetos
+            </div>
+            <div class="start-menu-separator"></div>
+            <div class="start-menu-item" id="shutdown">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PGNpcmNsZSBjeD0iOCIgY3k9IjgiIHI9IjciIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzAwMDAwMCIvPjxjaXJjbGUgY3g9IjgiIGN5PSI4IiByPSIzIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTggMUM4IDEsOCwzLDgsMyIgc3Ryb2tlPSIjMDAwMDAwIi8+PHBhdGggZD0iTTggMTVDOCAxNSw4LDEzLDgsMTMiIHN0cm9rZT0iIzAwMDAwMCIvPjxwYXRoIGQ9Ik0xNSA4QzE1IDgsMTMsOCwxMyw4IiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNMSA4QzEgOCwzLDgsMyw4IiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNMTIuNSAzLjVDMTIuNSAzLjUsMTEuNSw0LjUsMTEuNSw0LjUiIHN0cm9rZT0iIzAwMDAwMCIvPjxwYXRoIGQ9Ik00LjUgMTIuNUM0LjUgMTIuNSwzLjUsMTEuNSwzLjUsMTEuNSIgc3Ryb2tlPSIjMDAwMDAwIi8+PHBhdGggZD0iTTEyLjUgMTIuNUMxMi41IDEyLjUsMTEuNSwxMS41LDExLjUsMTEuNSIgc3Ryb2tlPSIjMDAwMDAwIi8+PHBhdGggZD0iTTQuNSAzLjVDNC41IDMuNSwzLjUsNC41LDMuNSw0LjUiIHN0cm9rZT0iIzAwMDAwMCIvPjwvc3ZnPg==" alt="Desligar">
+                Desligar
+            </div>
+        </div>
+    </div>
+    
+    <div class="context-menu" id="context-menu"></div>
 
     <script>
+        // Elementos da interface
+        const desktop = document.querySelector('.desktop');
+        const startButton = document.getElementById('start-button');
+        const startMenu = document.getElementById('start-menu');
+        const taskbarItems = document.getElementById('taskbar-items');
+        const clock = document.getElementById('clock');
+        const contextMenu = document.getElementById('context-menu');
+        
+        // Estado da aplicação
+        let openWindows = [];
+        let zIndexCounter = 1000;
+        let activeWindow = null;
+        
+        // Atualizar relógio
         function updateClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            document.getElementById('clock').textContent = timeString;
+            clock.textContent = timeString;
         }
         
         setInterval(updateClock, 1000);
         updateClock();
         
-        document.querySelectorAll('.title-bar-button').forEach(button => {
-            button.addEventListener('mousedown', function() {
-                this.style.border = '2px inset #c0c0c0';
-            });
-            button.addEventListener('mouseup', function() {
-                this.style.border = '2px outset #c0c0c0';
+        // Menu Iniciar
+        startButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            startMenu.style.display = startMenu.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        document.addEventListener('click', function() {
+            startMenu.style.display = 'none';
+            contextMenu.style.display = 'none';
+            document.querySelectorAll('.desktop-icon').forEach(icon => {
+                icon.classList.remove('selected');
             });
         });
         
-        document.querySelectorAll('.button').forEach(button => {
-            button.addEventListener('mousedown', function() {
-                this.style.border = '2px inset #c0c0c0';
+        // Ícones da área de trabalho
+        document.querySelectorAll('.desktop-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.querySelectorAll('.desktop-icon').forEach(i => {
+                    i.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                const windowType = this.getAttribute('data-window');
+                openWindow(windowType);
             });
-            button.addEventListener('mouseup', function() {
-                this.style.border = '2px outset #c0c0c0';
+            
+            icon.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                document.querySelectorAll('.desktop-icon').forEach(i => {
+                    i.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                showContextMenu(e.clientX, e.clientY, 'desktop');
             });
         });
         
-        document.querySelector('.start-button').addEventListener('mousedown', function() {
-            this.style.border = '2px inset #c0c0c0';
+        // Itens do menu Iniciar
+        document.querySelectorAll('.start-menu-item').forEach(item => {
+            if (item.id !== 'shutdown') {
+                item.addEventListener('click', function() {
+                    const windowType = this.getAttribute('data-window');
+                    openWindow(windowType);
+                    startMenu.style.display = 'none';
+                });
+            }
         });
-        document.querySelector('.start-button').addEventListener('mouseup', function() {
-            this.style.border = '2px outset #c0c0c0';
+        
+        // Desligar
+        document.getElementById('shutdown').addEventListener('click', function() {
+            if (confirm('Tem certeza de que deseja desligar o computador?')) {
+                document.body.innerHTML = '<div style="background: #000; color: #fff; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: Arial;">Agora é seguro desligar o computador</div>';
+            }
         });
+        
+        // Abrir janela
+        function openWindow(type) {
+            // Fechar janelas existentes do mesmo tipo
+            const existingWindow = openWindows.find(w => w.type === type);
+            if (existingWindow) {
+                existingWindow.element.style.display = 'block';
+                focusWindow(existingWindow.element);
+                return;
+            }
+            
+            const windowId = 'window-' + Date.now();
+            const windowElement = createWindow(type, windowId);
+            desktop.appendChild(windowElement);
+            
+            const windowObj = {
+                id: windowId,
+                type: type,
+                element: windowElement
+            };
+            
+            openWindows.push(windowObj);
+            addToTaskbar(windowId, type);
+            focusWindow(windowElement);
+            
+            // Tornar a janela arrastável
+            makeDraggable(windowElement);
+        }
+        
+        // Criar janela baseada no tipo
+        function createWindow(type, id) {
+            const windowElement = document.createElement('div');
+            windowElement.className = 'window';
+            windowElement.id = id;
+            
+            let title = '';
+            let content = '';
+            
+            switch(type) {
+                case 'my-computer':
+                    title = 'Meu Computador';
+                    content = `
+                        <div class="menu-bar">
+                            <div class="menu-item">Arquivo</div>
+                            <div class="menu-item">Editar</div>
+                            <div class="menu-item">Exibir</div>
+                            <div class="menu-item">Ajuda</div>
+                        </div>
+                        <div class="folder-view">
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cmVjdCB4PSI2IiB5PSI2IiB3aWR0aD0iOCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iMTgiIHk9IjYiIHdpZHRoPSI4IiBoZWlnaHQ9IjQiIGZpbGw9IiMwMDgwMDAiLz48cmVjdCB4PSI2IiB5PSIxMiIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIiIGZpbGw9IiMwMDgwMDAiLz48cmVjdCB4PSI2IiB5PSIxNiIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIiIGZpbGw9IiMwMDgwMDAiLz48cmVjdCB4PSI2IiB5PSIyMCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIiIGZpbGw9IiMwMDgwMDAiLz48L3N2Zz4=" alt="Disco Local (C:)">
+                                <span>Disco Local (C:)</span>
+                            </div>
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzAwMDAwMCIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjEyIiBmaWxsPSIjZmZmZmZmIi8+PHJlY3QgeD0iMTQiIHk9IjQiIHdpZHRoPSI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMDA4MDAwIi8+PHJlY3QgeD0iNCIgeT0iMTQiIHdpZHRoPSIyNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDA4MDAwIi8+PC9zdmc+" alt="Unidade de Rede">
+                                <span>Unidade de Rede</span>
+                            </div>
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIGZpbGw9IiNmZmZmZmYiLz48cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgZmlsbD0iIzAwODAwMCIvPjwvc3ZnPg==" alt="Painel de Controle">
+                                <span>Painel de Controle</span>
+                            </div>
+                        </div>
+                        <div class="status-bar">
+                            <div>5 objetos</div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'projects':
+                    title = 'Projetos';
+                    content = `
+                        <div class="menu-bar">
+                            <div class="menu-item">Arquivo</div>
+                            <div class="menu-item">Editar</div>
+                            <div class="menu-item">Exibir</div>
+                            <div class="menu-item">Ajuda</div>
+                        </div>
+                        <div class="folder-view">
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTYgNkgyNlYyNkg2VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNOCA4SDI0VjI0SDhWOFoiIGZpbGw9IiNmZmZmZmYiLz48cGF0aCBkPSJNMTAgMTBIMjJWMjJIMTBWMTBaIiBmaWxsPSIjMDA4MDAwIi8+PC9zdmc+" alt="Site Pessoal">
+                                <span>Site Pessoal</span>
+                            </div>
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTYgNkgyNlYyNkg2VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNOCA4SDI0VjI0SDhWOFoiIGZpbGw9IiNmZmZmZmYiLz48cGF0aCBkPSJNMTAgMTBIMjJWMjJIMTBWMTBaIiBmaWxsPSIjZmZmZjAwIi8+PC9zdmc+" alt="App Web">
+                                <span>App Web</span>
+                            </div>
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTYgNkgyNlYyNkg2VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNOCA4SDI0VjI0SDhWOFoiIGZpbGw9IiNmZmZmZmYiLz48cGF0aCBkPSJNMTAgMTBIMjJWMjJIMTBWMTBaIiBmaWxsPSIjZmYwMDAwIi8+PC9zdmc+" alt="API REST">
+                                <span>API REST</span>
+                            </div>
+                        </div>
+                        <div class="status-bar">
+                            <div>3 objetos</div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'documents':
+                    title = 'Documentos';
+                    content = `
+                        <div class="menu-bar">
+                            <div class="menu-item">Arquivo</div>
+                            <div class="menu-item">Editar</div>
+                            <div class="menu-item">Exibir</div>
+                            <div class="menu-item">Ajuda</div>
+                        </div>
+                        <div class="folder-view">
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTggNkgyNlYyNkg4VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNMTAgOEgyNFYyNEgxMFY4WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMiAxMEgyMlYxNkgxMlYxMFoiIGZpbGw9IiMwMDgwMDAiLz48cGF0aCBkPSJNMTIgMThIMjJWMjBIMTBWMThaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTEyIDIySDI0VjI0SDEyVjIyWiIgZmlsbD0iIzAwODAwMCIvPjwvc3ZnPg==" alt="Currículo">
+                                <span>Currículo</span>
+                            </div>
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTggNkgyNlYyNkg4VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNMTAgOEgyNFYyNEgxMFY4WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMiAxMEgyMlYxNkgxMlYxMFoiIGZpbGw9IiMwMDgwMDAiLz48cGF0aCBkPSJNMTIgMThIMjJWMjBIMTBWMThaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTEyIDIySDI0VjI0SDEyVjIyWiIgZmlsbD0iIzAwODAwMCIvPjwvc3ZnPg==" alt="Portfólio">
+                                <span>Portfólio</span>
+                            </div>
+                            <div class="desktop-icon" style="color: #000;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTTggNkgyNlYyNkg4VjZaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNMTAgOEgyNFYyNEgxMFY4WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMiAxMEgyMlYxNkgxMlYxMFoiIGZpbGw9IiMwMDgwMDAiLz48cGF0aCBkPSJNMTIgMThIMjJWMjBIMTBWMThaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTEyIDIySDI0VjI0SDEyVjIyWiIgZmlsbD0iIzAwODAwMCIvPjwvc3ZnPg==" alt="Blog">
+                                <span>Blog</span>
+                            </div>
+                        </div>
+                        <div class="status-bar">
+                            <div>3 objetos</div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'recycle-bin':
+                    title = 'Lixeira';
+                    content = `
+                        <div class="menu-bar">
+                            <div class="menu-item">Arquivo</div>
+                            <div class="menu-item">Editar</div>
+                            <div class="menu-item">Exibir</div>
+                            <div class="menu-item">Ajuda</div>
+                        </div>
+                        <div class="window-content" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                            <div style="text-align: center;">
+                                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTggOEg1NlY1Nkg4VjhaIiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiLz48cGF0aCBkPSJNMTIgMTJINTJWNTJIMTJWMTJaIiBmaWxsPSIjMDA4MDAwIi8+PHBhdGggZD0iTTI0IDI0SDQwVjI4SDI0VjI0WiIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0yNCAzMkg0MFYzNkgyNFYzMloiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=" alt="Lixeira Vazia" style="width: 64px; height: 64px; margin-bottom: 10px;">
+                                <p>A lixeira está vazia</p>
+                            </div>
+                        </div>
+                        <div class="status-bar">
+                            <div>0 objetos</div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            windowElement.innerHTML = `
+                <div class="title-bar">
+                    <div class="title-bar-text">${title}</div>
+                    <div class="title-bar-controls">
+                        <button class="title-bar-button" data-action="minimize">−</button>
+                        <button class="title-bar-button" data-action="maximize">□</button>
+                        <button class="title-bar-button" data-action="close">×</button>
+                    </div>
+                </div>
+                ${content}
+            `;
+            
+            // Posicionar janela aleatoriamente na área de trabalho
+            const maxX = desktop.clientWidth - 300;
+            const maxY = desktop.clientHeight - 250;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            windowElement.style.left = `${randomX}px`;
+            windowElement.style.top = `${randomY}px`;
+            
+            // Adicionar event listeners aos botões da janela
+            const minimizeBtn = windowElement.querySelector('[data-action="minimize"]');
+            const maximizeBtn = windowElement.querySelector('[data-action="maximize"]');
+            const closeBtn = windowElement.querySelector('[data-action="close"]');
+            
+            minimizeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                minimizeWindow(id);
+            });
+            
+            maximizeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMaximizeWindow(id);
+            });
+            
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeWindow(id);
+            });
+            
+            // Focar na janela ao clicar
+            windowElement.addEventListener('mousedown', function(e) {
+                if (e.target.closest('.title-bar-controls')) return;
+                focusWindow(this);
+            });
+            
+            return windowElement;
+        }
+        
+        // Adicionar janela à barra de tarefas
+        function addToTaskbar(id, type) {
+            const taskbarItem = document.createElement('div');
+            taskbarItem.className = 'taskbar-item';
+            taskbarItem.textContent = getWindowTitle(type);
+            taskbarItem.setAttribute('data-window-id', id);
+            
+            taskbarItem.addEventListener('click', function() {
+                const windowElement = document.getElementById(id);
+                if (windowElement.style.display === 'none') {
+                    windowElement.style.display = 'block';
+                    focusWindow(windowElement);
+                } else {
+                    minimizeWindow(id);
+                }
+            });
+            
+            taskbarItems.appendChild(taskbarItem);
+        }
+        
+        // Obter título da janela
+        function getWindowTitle(type) {
+            switch(type) {
+                case 'my-computer': return 'Meu Computador';
+                case 'projects': return 'Projetos';
+                case 'documents': return 'Documentos';
+                case 'recycle-bin': return 'Lixeira';
+                default: return 'Janela';
+            }
+        }
+        
+        // Focar em uma janela
+        function focusWindow(windowElement) {
+            zIndexCounter++;
+            windowElement.style.zIndex = zIndexCounter;
+            
+            // Atualizar estado ativo na barra de tarefas
+            document.querySelectorAll('.taskbar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const taskbarItem = document.querySelector(`[data-window-id="${windowElement.id}"]`);
+            if (taskbarItem) {
+                taskbarItem.classList.add('active');
+            }
+            
+            activeWindow = windowElement;
+        }
+        
+        // Minimizar janela
+        function minimizeWindow(id) {
+            const windowElement = document.getElementById(id);
+            windowElement.style.display = 'none';
+            
+            const taskbarItem = document.querySelector(`[data-window-id="${id}"]`);
+            if (taskbarItem) {
+                taskbarItem.classList.remove('active');
+            }
+        }
+        
+        // Maximizar/Restaurar janela
+        function toggleMaximizeWindow(id) {
+            const windowElement = document.getElementById(id);
+            
+            if (windowElement.style.width === '100%') {
+                // Restaurar
+                windowElement.style.width = '';
+                windowElement.style.height = '';
+                windowElement.style.left = '';
+                windowElement.style.top = '';
+            } else {
+                // Maximizar
+                windowElement.style.width = '100%';
+                windowElement.style.height = '100%';
+                windowElement.style.left = '0';
+                windowElement.style.top = '0';
+            }
+            
+            focusWindow(windowElement);
+        }
+        
+        // Fechar janela
+        function closeWindow(id) {
+            const windowElement = document.getElementById(id);
+            windowElement.remove();
+            
+            const taskbarItem = document.querySelector(`[data-window-id="${id}"]`);
+            if (taskbarItem) {
+                taskbarItem.remove();
+            }
+            
+            openWindows = openWindows.filter(w => w.id !== id);
+        }
+        
+        // Tornar janela arrastável
+        function makeDraggable(element) {
+            const titleBar = element.querySelector('.title-bar');
+            let isDragging = false;
+            let offsetX, offsetY;
+            
+            titleBar.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                offsetX = e.clientX - element.offsetLeft;
+                offsetY = e.clientY - element.offsetTop;
+                focusWindow(element);
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+                
+                // Limitar movimento dentro da área de trabalho
+                const maxX = desktop.clientWidth - element.offsetWidth;
+                const maxY = desktop.clientHeight - element.offsetHeight;
+                
+                element.style.left = `${Math.max(0, Math.min(x, maxX))}px`;
+                element.style.top = `${Math.max(0, Math.min(y, maxY))}px`;
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+        }
+        
+        // Mostrar menu de contexto
+        function showContextMenu(x, y, type) {
+            contextMenu.innerHTML = '';
+            
+            if (type === 'desktop') {
+                const items = [
+                    { text: 'Organizar Ícones', action: null },
+                    { text: 'Linha de Grade', action: null },
+                    { text: 'Alinhar à Grade', action: null },
+                    { separator: true },
+                    { text: 'Novo', action: null },
+                    { separator: true },
+                    { text: 'Propriedades', action: null }
+                ];
+                
+                items.forEach(item => {
+                    if (item.separator) {
+                        const separator = document.createElement('div');
+                        separator.className = 'context-menu-separator';
+                        contextMenu.appendChild(separator);
+                    } else {
+                        const menuItem = document.createElement('div');
+                        menuItem.className = 'context-menu-item';
+                        menuItem.textContent = item.text;
+                        contextMenu.appendChild(menuItem);
+                    }
+                });
+            }
+            
+            contextMenu.style.left = `${x}px`;
+            contextMenu.style.top = `${y}px`;
+            contextMenu.style.display = 'block';
+        }
     </script>
 </body>
 </html>
